@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - 周颐</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- 登录页面 -->
+    <div id="loginPage" class="admin-page active">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-logo" onclick="window.location.href='index.html'">周颐</div>
+                <h2>后台管理</h2>
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" id="username" placeholder="请输入用户名" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" id="password" placeholder="请输入密码" autocomplete="current-password">
+                </div>
+                <button class="btn btn-primary" onclick="login()">登录</button>
+                <p class="login-tip">默认账号：zhouyi / 123456</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主后台页面 -->
+    <div id="adminMain" class="admin-page">
+        <div class="admin-layout">
+            <div class="admin-sidebar">
+                <div class="sidebar-logo" onclick="window.location.href='index.html'">周颐</div>
+                <nav class="sidebar-menu">
+                    <a href="#" class="menu-item active" data-page="posts">
+                        <span class="menu-icon">📝</span>
+                        <span class="menu-text">文章管理</span>
+                    </a>
+                    <a href="#" class="menu-item" data-page="write">
+                        <span class="menu-icon">✍️</span>
+                        <span class="menu-text">写文章</span>
+                    </a>
+                    <a href="#" class="menu-item" data-page="comments">
+                        <span class="menu-icon">💬</span>
+                        <span class="menu-text">评论管理</span>
+                    </a>
+                    <a href="#" class="menu-item" data-page="settings">
+                        <span class="menu-icon">⚙️</span>
+                        <span class="menu-text">账号设置</span>
+                    </a>
+                    <a href="#" class="menu-item menu-logout" onclick="logout()">
+                        <span class="menu-icon">🚪</span>
+                        <span class="menu-text">退出登录</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="admin-content">
+                <div class="content-page active" id="postsPage">
+                    <div class="page-header">
+                        <h1>文章管理</h1>
+                        <button class="btn btn-primary" onclick="switchPage('write')">+ 写文章</button>
+                    </div>
+                    <div class="posts-list" id="postsList"></div>
+                </div>
+                <div class="content-page" id="writePage">
+                    <div class="page-header">
+                        <h1 id="writePageTitle">写文章</h1>
+                    </div>
+                    <form id="postForm" class="write-form">
+                        <input type="hidden" id="editPostId" value="">
+                        <div class="form-group">
+                            <label>文章标题</label>
+                            <input type="text" id="postTitle" placeholder="请输入文章标题" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>发布日期</label>
+                                <input type="date" id="postDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>文章标签</label>
+                                <input type="text" id="postTag" placeholder="如：投资、生活、工作" value="生活">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>文章摘要</label>
+                            <input type="text" id="postExcerpt" placeholder="简短描述，显示在文章列表中" required>
+                        </div>
+                        <div class="form-group">
+                            <label>文章内容</label>
+                            <textarea id="postContent" placeholder="在这里写文章内容..." required></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="cancelEdit()">取消</button>
+                            <button type="submit" class="btn btn-primary">保存文章</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="content-page" id="commentsPage">
+                    <div class="page-header">
+                        <h1>评论管理</h1>
+                    </div>
+                    <div class="comments-list" id="adminCommentsList"></div>
+                </div>
+                <div class="content-page" id="settingsPage">
+                    <div class="page-header">
+                        <h1>账号设置</h1>
+                    </div>
+                    <div class="settings-card">
+                        <h3>修改密码</h3>
+                        <div class="form-group">
+                            <label>当前密码</label>
+                            <input type="password" id="currentPassword" placeholder="请输入当前密码">
+                        </div>
+                        <div class="form-group">
+                            <label>新密码</label>
+                            <input type="password" id="newPassword" placeholder="请输入新密码">
+                        </div>
+                        <div class="form-group">
+                            <label>确认新密码</label>
+                            <input type="password" id="confirmPassword" placeholder="请再次输入新密码">
+                        </div>
+                        <button class="btn btn-primary" onclick="changePassword()">保存修改</button>
+                    </div>
+                    <div class="settings-card">
+                        <h3>数据导出</h3>
+                        <p>将所有文章数据导出为 posts.json 文件，用于部署到服务器</p>
+                        <button class="btn btn-secondary" onclick="exportData()">导出 posts.json</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
